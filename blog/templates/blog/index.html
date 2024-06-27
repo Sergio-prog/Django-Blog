@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% for element in articles %}
+    <div style="display: flex; align-items: center;">
+        <ul>
+            <li>
+                <a href="article/{{ element.link }}">{{ element.title }}</a>
+            </li>
+        </ul>
+    </div>
+{% endfor %}
+{% endblock %}
