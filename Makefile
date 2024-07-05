@@ -1,0 +1,1 @@
+lint: poetry run black .

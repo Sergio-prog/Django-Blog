@@ -8,22 +8,26 @@
 
 <div class="container mt-5 d-flex justify-content-center align-items-center full-height">
     <form method="POST" class="w-50">
+        {% csrf_token %}
+
         <div class="mb-3">
             <label for="TitleInput">Title</label>
-            <input id="TitleInput" class="form-control form-control-lg" type="text" placeholder="Title">
+            <input name="title" id="TitleInput" class="form-control form-control-lg" type="text" placeholder="Title" required>
         </div>
 
         <div class="mt-2">
             <label for="ContentInput">Content</label>
-            <textarea id="ContentInput" class="form-control form-control-lg" placeholder="Body Text" ></textarea>
+            <textarea name="body" id="ContentInput" class="form-control form-control-lg" placeholder="Body Text" required></textarea>
         </div>
 
         <div class="mt-2">
             <label for="ImageInput">Cover</label>
-            <input type="text" id="ImageInput" class="form-control form-control-lg" placeholder="Image URL">
+            <input name="image" type="text" id="ImageInput" class="form-control form-control-lg" placeholder="Image URL">
         </div>
 
-        {% include 'messages.html' %}
+        <div class="mt-4">
+            {% include 'messages.html' %}
+        </div>
 
         <div class="mt-4 d-flex justify-content-center">
             <button type="submit" class="btn btn-lg btn-primary">Create</button>

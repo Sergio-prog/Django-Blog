@@ -1,5 +1,6 @@
 import math
 import random
+from urllib.parse import quote
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
@@ -18,9 +19,7 @@ class BlogUser(AbstractUser):
 
 class UserPermissions(models.Model):
     class Meta:
-        permissions = [
-            ("can_read_blogs", "Can read blogs")
-        ]
+        permissions = [("can_read_blogs", "Can read blogs")]
 
 
 class Article(models.Model):
@@ -35,11 +34,23 @@ class Article(models.Model):
     @classmethod
     def generate_link(cls, title: str):
         identifier = str(cls._random_identifier())
-        return urlencode(title.replace(" ", "-") + identifier)
+        return quote(title.replace(" ", "-") + identifier)
 
     @classmethod
-    def create(cls, title: str, body: str, image_url: str = None):
-        return Article(title=title, body=body, image_url=image_url, link=cls.generate_link(title), time_to_read=cls.estimate_time(body))
+    def create(cls, user: BlogUser, title: str, body: str, image_url: str = None):
+        if not user.is_authenticated or not title or not body:
+            raise ValueError()
+
+        _article = Article(
+            title=title,
+            body=body,
+            image_url=image_url,
+            link=cls.generate_link(title),
+            time_to_read=cls.estimate_time(body),
+            author=user,
+        )
+        _article.save()
+        return _article
 
     author = models.ForeignKey(BlogUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=250)

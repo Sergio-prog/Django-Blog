@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -31,19 +31,19 @@ def profile(request, id):
 
 def get_article(request, link: str):  # TODO: Добавить проверку на method ендпоинта
     article = Article.objects.get(link=link)
-    print(article)
     return render(request, "blog/article.html", {"article": article})
 
 
-def get_articles_by_user(request, id: str):
-    ...
+def get_articles_by_user(request, id: str): ...
 
 
+@login_required(login_url="/accounts/login/")
 def create_article(request):
     if request.method == "GET":
         return render(request, "blog/write_article.html")
+
     elif request.method == "POST":
-        body = request.body
+        body = request.POST
         required_fields = ("title", "body")
 
         not_provided_fields = []
@@ -52,16 +52,16 @@ def create_article(request):
                 not_provided_fields.append(field)
 
         if not_provided_fields:
-            not_provided_fields = ', '.join(not_provided_fields)
+            not_provided_fields = ", ".join(not_provided_fields)
             messages.error(request, f"These fields are not provided (or empty): {not_provided_fields}")
+        else:
+            Article.create(request.user, body.get("title"), body.get("body"), body.get("image"))
+            messages.success(request, "Successfully created new article")
 
-        Article.create(body.title, body.body)
-        messages.success(request, "Successfully created new article")
         return render(request, "blog/write_article.html")
 
 
-def edit_profile(request):
-    ...
+def edit_profile(request): ...
 
 
 class CustomUserCreationForm(UserCreationForm):

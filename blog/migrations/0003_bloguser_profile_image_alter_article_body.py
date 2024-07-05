@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_article_time_to_read'),
+        ("blog", "0002_article_time_to_read"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='bloguser',
-            name='profile_image',
-            field=models.URLField(default='https://cdn-icons-png.flaticon.com/512/847/847969.png'),
+            model_name="bloguser",
+            name="profile_image",
+            field=models.URLField(default="https://cdn-icons-png.flaticon.com/512/847/847969.png"),
         ),
         migrations.AlterField(
-            model_name='article',
-            name='body',
+            model_name="article",
+            name="body",
             field=models.TextField(),
         ),
     ]
