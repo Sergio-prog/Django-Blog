@@ -19,14 +19,21 @@
                 {% endif %}
             </ul>
             {% if user.is_authenticated %}
-                <form class="d-flex" action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <!-- Используйте Bootstrap Icons -->
-                    <!-- <a type="button" class="btn btn-outline-secondary" aria-label="Profile" href="" style="margin-right: 5px">
-                        <span class="bi bi-person"></span>
-                    </a> -->
-                    <button type="submit" class="btn btn-primary">Log Out</button>
-                </form>
+                <div class="gap-2" style="display: flex;">
+                    <div>
+                        <a href="{% url 'write_article' %}">
+                            <button class="btn btn-primary" type="button">Create new article</button>
+                        </a>
+                    </div>
+                    <form class="d-flex" action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <!-- Используйте Bootstrap Icons -->
+                        <!-- <a type="button" class="btn btn-outline-secondary" aria-label="Profile" href="" style="margin-right: 5px">
+                            <span class="bi bi-person"></span>
+                        </a> -->
+                        <button type="submit" class="btn btn-secondary">Log Out</button>
+                    </form>
+                </div>
             {% else %}
                 <div class="d-flex" style="gap: 10px;">
                     <a type="button" class="btn btn-outline-secondary" href="{% url 'login' %}">Log In</a>

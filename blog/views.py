@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
@@ -39,7 +40,24 @@ def get_articles_by_user(request, id: str):
 
 
 def create_article(request):
-    ...
+    if request.method == "GET":
+        return render(request, "blog/write_article.html")
+    elif request.method == "POST":
+        body = request.body
+        required_fields = ("title", "body")
+
+        not_provided_fields = []
+        for field in required_fields:
+            if not body.get(field):
+                not_provided_fields.append(field)
+
+        if not_provided_fields:
+            not_provided_fields = ', '.join(not_provided_fields)
+            messages.error(request, f"These fields are not provided (or empty): {not_provided_fields}")
+
+        Article.create(body.title, body.body)
+        messages.success(request, "Successfully created new article")
+        return render(request, "blog/write_article.html")
 
 
 def edit_profile(request):

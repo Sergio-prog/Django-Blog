@@ -38,8 +38,8 @@ class Article(models.Model):
         return urlencode(title.replace(" ", "-") + identifier)
 
     @classmethod
-    def create(cls, title: str, body: str):
-        return Article(title=title, body=body, link=cls.generate_link(title), time_to_read=cls.estimate_time(body))
+    def create(cls, title: str, body: str, image_url: str = None):
+        return Article(title=title, body=body, image_url=image_url, link=cls.generate_link(title), time_to_read=cls.estimate_time(body))
 
     author = models.ForeignKey(BlogUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
