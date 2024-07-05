@@ -3,13 +3,58 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% for element in articles %}
-    <div style="display: flex; align-items: center;">
-        <ul>
-            <li style="gap: 10px;">
-                <a href="article/{{ element.link }}">{{ element.title }}</a>
-            </li>
-        </ul>
-    </div>
-{% endfor %}
+
+{% include 'blog\navbar.html' %}
+
+<!--<div class="container mt-5">-->
+<!--    <div class="row row-cols-1 row-cols-md-4 g-4">-->
+<!--        {% for article in articles %}-->
+<!--            <div class="col">-->
+<!--                <div class="card h-100">-->
+<!--                    {% if article.image_url != None %}-->
+<!--                        <img src="{{ article.image_url }}" class="card-img-top" alt="Article Image">-->
+<!--                    {% endif %}-->
+<!--                    <div class="card-body">-->
+
+<!--                        <h5 class="card-title">{{ article.title }}</h5>-->
+<!--                        <p class="card-text">by {{ article.author }}</p>-->
+<!--                        <p class="card-text"><small class="text-muted">{{ article.created_at|date:"Y.m.d" }}</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="container mt-5">
+    <ul class="list-group">
+        {% for article in articles %}
+            <a href="{% url 'get_article' article.link %}" class="text-decoration-none text-dark">
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-8 d-flex flex-column justify-content-between8">
+                            <div class="d-flex flex-column h-100">
+                                <div class="mb-2">
+                                    <small class="text-muted">{{ article.author }}</small>
+                                </div>
+                                <h3 class="mb-1">{{ article.title }}</h3>
+                                <div class="mt-auto">
+                                    <small class="text-muted">{{ article.created_at|date:"Y.m.d" }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if article.image_url != None %}
+                            <div class="blog-small-image col-md-4 d-flex align-items-center">
+                                <img style="float: right; display: block;" src="{{ article.image_url }}" class="img-fluid rounded" alt="Article Image">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </ul>
+</div>
+
+
 {% endblock %}

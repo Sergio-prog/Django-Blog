@@ -3,9 +3,35 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block content %}
-<div>
-    <h1>{{ article.title }}</h1>
-    <h4>By: {{ article.author }}</h4>
-    <p>{{ article.body }}</p>
+{% include 'blog\navbar.html' %}
+
+<div class="container">
+    <div class="row article-header">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="display-4"><strong>{{ article.title }}</strong></h1>
+
+            <div class="author-info">
+                <a href="{% url 'profile' article.author.id %}">
+                    <img class="author-info-img" src="{{ article.author.profile_image }}" alt="Author Avatar">
+                </a>
+                <div>
+                    <p class="mb-0">{{ article.author }}</p>
+                    <p class="text-muted mb-0"><small>{{ article.created_at|date:"Y.m.d" }} · {{ article.time_to_read }} min read</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <div class="row">-->
+<!--        <div class="col-md-8 offset-md-2">-->
+<!--            <img src="{{ article.image_url }}" class="img-fluid rounded" alt="Article Image">-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="row article-body">
+        <div class="col-md-8 offset-md-2">
+            <p>{{ article.body|linebreaksbr  }}</p>
+        </div>
+    </div>
 </div>
 {% endblock %}
