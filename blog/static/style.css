@@ -27,7 +27,6 @@
     margin: 10px 10px;
 }
 .auth-form {
-    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,5 +45,26 @@
 }
 
 .blog-small-image {
-    max-width: 100px;
+    max-width: 150px;
+}
+
+.btn-index-form {
+    width: 160px;
+    height: 40px;
+    align-content: center;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.product-item {
+    margin-bottom: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-item .panel-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }

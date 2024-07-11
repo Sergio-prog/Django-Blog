@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
@@ -26,7 +26,8 @@ def index(request):
 
 # Not implemented yet
 def profile(request, id):
-    return render(request, "blog/index.html", {"articles": Article.objects.all()})
+    profile = get_object_or_404(BlogUser, id=id)
+    return render(request, "blog/profile.html", {"profile": profile})
 
 
 def get_article(request, link: str):  # TODO: Добавить проверку на method ендпоинта
